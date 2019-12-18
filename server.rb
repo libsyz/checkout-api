@@ -3,13 +3,15 @@ require 'json'
 require 'sinatra'
 
 
+
+
   get '/' do
     "welcome to Sinatra"
   end
 
 
-  post '/checkout/' do
-    puts [:params]
+  post '/' do
+    puts "HELLO WORLD"
   end
 
 
