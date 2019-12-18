@@ -1,11 +1,16 @@
 
-
 class ReservationResponse
-  attr_reader :status, :failure_reason, :outcome
-  def initialize(response_json)
-    @status = "some"
-    @failure_reason = "none"
-    @outcome = "success"
+  attr_reader :status, :outcome
+
+  def initialize(response)
+    @status = response[:status]
+    @outcome = response[:outcome]
+  end
+
+  def failure_reason
+    nil
   end
 
 end
+
+

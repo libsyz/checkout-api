@@ -1,10 +1,9 @@
 
-require_relative '../../service.rb'
+require_relative "./../../service.rb"
 require 'rspec'
 require 'json'
-require 'pry-byebug'
 
-context 'failure' do
+context 'failure scenario' do
   context "service calls with incomplete params" do
 
     let(:service) { ReservationService }
@@ -54,44 +53,4 @@ context 'failure' do
     end
   end
 end
-
-
-describe "user performs a call with invalid params" do
-  subject { Service }
-
-
-
-
-end
-  #     expect { Service.call({}) }.to raise_error(Service::MissingParamsError)
-
-
-#   it 'returns a successful charge with the relevant payment details' do
-#     result = subject.(params)
-
-#     expect(result.success?).to be_truthy
-#     expect(result.transaction_id).to eq ''
-#     expect(result.failure_reason).to eq nil
-#   end
-
-#   it 'returns true when the request is valid' do
-#     params =
-#     expect { Service.call(params)}.to be_truthy
-#   end
-
-#   context 'payment declined' do
-#     let(:card_id) {  }
-
-#     it 'returns a failed charge with payment declined reason' do
-#       result = subject.(params)
-
-#       expect(result.success?).to be_falsy
-#       expect(result.failure_reason).to be eq ''
-#     end
-#   end
-
-#   context 'invalid PAN number' do
-
-#   end
-# end
 

@@ -8,11 +8,9 @@ class ReservationService
   def self.call(params = {})
     return bad_params if invalid?(params)
 
-    response = HTTParty.post(BASE_URI + params[:card_id], params)
-               .then { |response| JSON.pretty_generate(response.body) }
-               #.then { |hash| ReservationResponse.new(hash) }
-
-    puts response.inspect
+    HTTParty.post(BASE_URI + params[:card_id], params)
+            .then { |response| parse_with_symbols(response) }
+            .then { |rb_hash| ReservationResponse.new(rb_hash) }
   end
 
   private
@@ -28,6 +26,10 @@ class ReservationService
         type: "Invalid request error"
       }
     }.to_json
+  end
+
+  def self.parse_with_symbols(response)
+    JSON.parse(response.body, symbolize_names: true)
   end
 
 
