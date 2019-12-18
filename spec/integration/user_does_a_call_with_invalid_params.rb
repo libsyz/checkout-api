@@ -12,32 +12,29 @@ context 'failure scenario' do
     let(:valid_currency) { 'USD' }
 
     describe "call without any params" do
-      it "returns an error message" do
-        response = JSON.parse(service.call, symbolize_names: true)
-        expect(response[:error][:message]).to eq "Invalid request parameters"
-        expect(response[:error][:type]).to eq "Invalid request error"
+      it "returns an error request object" do
+        response = service.call
+        expect(response.class).to eq ErrorResponse
       end
     end
 
     describe "call without amount" do
-      it "returns an error message" do
+      it "returns an error object with an error message" do
         params = {card_id: valid_card, currency: valid_currency }
-        response = JSON.parse(service.call,
-                              symbolize_names: true)
+        response = service.call(params)
 
-        expect(response[:error][:message]).to eq "Invalid request parameters"
-        expect(response[:error][:type]).to eq "Invalid request error"
+        expect(response.status).to eq "request_invalid"
+        expect(response.failure_reason).to eq "invalid_params"
       end
     end
 
     describe "call without currency" do
       it "returns an error message" do
         params = {card_id: valid_card, amount: valid_amount }
+        response = service.call(params)
 
-        response = JSON.parse(service.call,
-                              symbolize_names: true)
-        expect(response[:error][:message]).to eq "Invalid request parameters"
-        expect(response[:error][:type]).to eq "Invalid request error"
+        expect(response.status).to eq "request_invalid"
+        expect(response.failure_reason).to eq "invalid_params"
       end
     end
 
@@ -45,10 +42,9 @@ context 'failure scenario' do
       it "returns an error message" do
         params = {amount: valid_amount, currency: valid_currency }
 
-        response = JSON.parse(service.call,
-                              symbolize_names: true)
-        expect(response[:error][:message]).to eq "Invalid request parameters"
-        expect(response[:error][:type]).to eq "Invalid request error"
+        response = service.call(params)
+        expect(response.status).to eq "request_invalid"
+        expect(response.failure_reason).to eq "invalid_params"
       end
     end
   end

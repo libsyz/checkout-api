@@ -11,12 +11,9 @@ class ReservationResponse
 end
 
 class ErrorResponse
-  def status
-    "invalid_card_id"
-  end
-
-  def failure_reason
-    "card_number_invalid"
+  def initialize(response)
+    @status = response[:status]
+    @failure_reason = response[:reason]
   end
 
   def outcome
@@ -26,7 +23,14 @@ end
 
 class ResponseHandler
   def self.call(response)
-    response.dig(:error, :message) ? ErrorResponse.new : ReservationResponse.new(response)
+    response.dig(:error, :message) ? ErrorResponse.new(error_params) : ReservationResponse.new(response)
+  end
+
+  def self.error_params
+    {
+      status: "invalid_card_id",
+      reason: "card_number_invalid"
+    }
   end
 end
 

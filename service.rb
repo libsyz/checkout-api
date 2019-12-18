@@ -20,12 +20,8 @@ class ReservationService
   end
 
   def self.bad_params
-    {
-      error: {
-        message: "Invalid request parameters",
-        type: "Invalid request error"
-      }
-    }.to_json
+    ErrorResponse.new(status: 'request_invalid',
+                      failure_reason: 'invalid_params')
   end
 
   def self.parse_with_symbols(response)
