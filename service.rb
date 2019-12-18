@@ -10,7 +10,7 @@ class ReservationService
 
     HTTParty.post(BASE_URI + params[:card_id], params)
             .then { |response| parse_with_symbols(response) }
-            .then { |rb_hash| ReservationResponse.new(rb_hash) }
+            .then { |rb_hash| ResponseHandler.call(rb_hash) }
   end
 
   private
